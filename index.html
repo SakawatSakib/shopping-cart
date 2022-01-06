@@ -25,11 +25,11 @@
 
                      <div class="col-md-5 center-item">
                         <div class="input-group number-spinner">
-                           <button id="iphoneMinusBtn"  class="btn btn-default"><i class="fas fa-minus"></i></button>
-                           <input id="iphoneCounterValue" type="text" class="form-control text-center" value="1">
-                           <button id="iphonePlusBtn" class="btn btn-default"><i class="fas fa-plus"></i></button>
+                           <button onclick="handleProductChange('iphone',false)"  class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="iphone-Counter" type="text" class="form-control text-center" value="1">
+                           <button onclick="handleProductChange('iphone',true)"  class="btn btn-default"><i class="fas fa-plus"></i></button>
                         </div>
-                        <h5>$ <span id="iphonePrice" >1219</span> </h5>
+                        <h5>$ <span id="iphone-Price" >1219</span> </h5>
                         <img src="images/remove.png" alt="" class="remove-item">
                      </div>
                   </div>
@@ -43,12 +43,12 @@
                      </div>
                      <div class="col-md-5 center-item">
                         <div class="input-group number-spinner">
-                           <button id="iphoneCaseMinusBtn" class="btn btn-default"><i class="fas fa-minus"></i></button>
-                           <input id="iphoneCaseCounterValue" type="text" class="form-control text-center" value="1">
-                           <button id="iphoneCasePlusBtn" class="btn btn-default"><i class="fas fa-plus"></i></button>
+                           <button onclick="handleProductChange('case',false)" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="case-Counter" type="text" class="form-control text-center" value="1">
+                           <button onclick="handleProductChange('case',true)" class="btn btn-default"><i class="fas fa-plus"></i></button>
 
                         </div>
-                        <h5>$ <span id="iphoneCasePrice" >59</span> </h5>
+                        <h5>$ <span id="case-Price" >59</span> </h5>
                         <img src="images/remove.png" alt="" class="remove-item">
                      </div>
                   </div>
@@ -79,57 +79,147 @@
    </section>
  <script>
 
-    //Iphone Input Tag Value Increasing event listen
-       let count = 0;  
+//     //Iphone Input Tag Value Increasing event listen done by sakawat sakib
+//        let count = 1;  
 
-       let counter = document.getElementById("iphoneCounterValue").value;
+//        let counter = document.getElementById("iphoneCounterValue").value;
 
-       let iphonePrice = document.getElementById("iphonePrice").innerText;
-       let iphoneCasePrice = document.getElementById("iphoneCasePrice").innerText;
+//        let iphonePrice = document.getElementById("iphonePrice").innerText;
+//        let iphoneCasePrice = document.getElementById("iphoneCasePrice").innerText;
 
-       let subtotal = document.getElementById("subtotal").innerText;
+//        let subtotal = document.getElementById("subtotal").innerText;
 
-       let tax = document.getElementById("tax").innerText;
+//        let tax = document.getElementById("tax").innerText;
 
-       let totalPrice = document.getElementById("totalPrice").innerText;
+//        let totalPrice = document.getElementById("totalPrice").innerText;
 
-      const iphonePlusBtn = document.getElementById("iphonePlusBtn");
-      iphonePlusBtn.addEventListener("click",function(){
+//       const iphonePlusBtn = document.getElementById("iphonePlusBtn");
+//       iphonePlusBtn.addEventListener("click",function(){
          
-          let counterNumber =parseFloat(counter); 
-          let subtotalNumber =parseFloat(subtotal); 
-          let taxNumber =parseFloat(tax); 
-          let totalPriceNumber =parseFloat(totalPrice); 
+//           let counterNumber =parseInt(counter); 
+//           let subtotalNumber =parseInt(subtotal); 
+//           let taxNumber =parseInt(tax); 
+//           let totalPriceNumber =parseInt(totalPrice); 
          
-         count ++;
-         counterNumber.innerHTML = count;
+//          count ++;
+//          counterNumber.innerHTML = count;
 
-         let iphoneCasePriceNumber = parseFloat(iphoneCasePrice);
-         let iphonePriceNumber = parseFloat(iphonePrice);
-         let totalIphonePrice = iphonePriceNumber* count;
-         let subtotalPrice = (iphoneCasePriceNumber+iphonePriceNumber)*count;
+//          let iphoneCasePriceNumber = parseInt(iphoneCasePrice);
+//          let iphonePriceNumber = parseInt(iphonePrice);
+//          let totalIphonePrice = iphonePriceNumber* count;
+//          let subtotalPrice = (iphoneCasePriceNumber+iphonePriceNumber)*count;
 
-         document.getElementById("subtotal").innerText = subtotalPrice;
-         document.getElementById("iphonePrice").innerText = totalIphonePrice;
-         document.getElementById("iphoneCounterValue").value = count;
+//          document.getElementById("subtotal").innerText = subtotalPrice;
+//          document.getElementById("iphonePrice").innerText = totalIphonePrice;
+//          document.getElementById("iphoneCounterValue").value = count;
 
-      })
-//Iphone Input Tag Value Decreasing event listen
-  const iphoneMinusBtn = document.getElementById("iphoneMinusBtn");
-  iphoneMinusBtn.addEventListener("click",function(){
-      count --;
+//       })
+// //Iphone Input Tag Value Decreasing event listen
+//   const iphoneMinusBtn = document.getElementById("iphoneMinusBtn");
+//   iphoneMinusBtn.addEventListener("click",function(){
+//       if(count>0){
+//          count --;
+//       }
       
-      let iphonePriceNumber = parseFloat(iphonePrice);
-      let total = iphonePriceNumber* count;
-      document.getElementById("iphonePrice").innerText = total;
-      document.getElementById("iphoneCounterValue").value = count;
+//       let iphonePriceNumber = parseInt(iphonePrice);
+//       let total = iphonePriceNumber* count;
+//       document.getElementById("iphonePrice").innerText = total;
+//       document.getElementById("iphoneCounterValue").value = count;
  
-  })
+//   })
+function handleProductChange(product,isIncrease){
+      const productInput =  document.getElementById(product+"-Counter");
+      const productCount = parseInt(productInput.value);
+      let productNewCount = productCount;
+      if(isIncrease == true){
+       productNewCount = productCount + 1;
+      }
+      if(isIncrease==false && productCount > 0){
+       productNewCount = productCount - 1;
+      }
+      productInput.value = productNewCount;
+      let productTotalCost = 0;
+      if(product == 'iphone'){
+         productTotalCost = productNewCount*1219;
+      }
+      if(product=='case'){
+         productTotalCost = productNewCount*59;
+            }
+      
+      document.getElementById(product + "-Price").innerText = productTotalCost;
+      calculateTotal();
+    }
+
+    function calculateTotal(){
+      const phoneCount = productInputValue('iphone');
+      const caseCount = productInputValue('case');
+
+      const totalPrice = phoneCount*1219 + caseCount*59;
+      document.getElementById('subtotal').innerText= totalPrice;
+      const tax =Math.round(totalPrice* 0.1);
+      document.getElementById('tax').innerText= tax;
+      const totalCost = totalPrice + tax;
+      document.getElementById('totalPrice').innerText=totalCost;
+    }
+ function productInputValue(product){
+      const productInput = document.getElementById(product+'-Counter');
+      const productCount = parseInt(productInput.value);
+      return productCount;
+ }
+  //IPHONE Tag Value Increase--Decrease Function---------------------------------------------------------------
+//   function handlePhoneChange(isIncrease){
+//       const phoneInput =  document.getElementById("iphone-Counter");
+//       const phoneCount = parseInt(phoneInput.value);
+//       let phoneNewCount =  phoneCount ;
+//       if(isIncrease == true){
+//          phoneNewCount = phoneCount + 1;
+//       }
+//       if(isIncrease==false && phoneCount > 0){
+//          phoneNewCount = phoneCount - 1;
+//       }
+//       phoneInput.value = phoneNewCount;
+//       const phoneTotalCost = phoneNewCount * 1219;
+      
+//       document.getElementById("iphonePrice").innerText = phoneTotalCost;
+//     }
 
 
-  
-     
-
+//   //IPHONE-CASE Tag Value Increase--Decrease Function
+//     function handleProductChange(isIncrease){
+//       const caseInput =  document.getElementById("Case-Counter");
+//       const caseCount = parseInt(caseInput.value);
+//       let caseNewCount = caseCount;
+//       if(isIncrease == true){
+//        caseNewCount = caseCount + 1;
+//       }
+//       if(isIncrease==false && caseCount > 0){
+//        caseNewCount = caseCount - 1;
+//       }
+//       caseInput.value = caseNewCount;
+//       const caseTotalCost = caseNewCount * 59;
+      
+//       document.getElementById("iphoneCasePrice").innerText = caseTotalCost;
+//     }
+//-------------------------------------------------------------------------------------------------
+//    document.getElementById('iphoneCasePlusBtn').addEventListener('click',function(){
+      
+//     const caseInput =  document.getElementById("iphoneCaseCounterValue");
+//     const caseCount = parseInt(caseInput.value);
+//     const caseNewCount = caseCount + 1;
+//     caseInput.value = caseNewCount;
+//     const caseTotalCost = caseNewCount * 59;
+   
+//     document.getElementById("iphoneCasePrice").innerText = caseTotalCost;
+//   });
+//   //IPHONE Case Tag Value Decrease event Listen
+//    document.getElementById("iphoneCaseMinusBtn").addEventListener('click',function(){
+//       const caseInput = document.getElementById("iphoneCaseCounterValue");
+//       const caseCount = parseInt(caseInput.value);
+//       const caseNewCount = caseCount - 1;
+//       caseInput.value = caseNewCount;
+//       const caseTotalCost = caseNewCount * 59;
+//       document.getElementById("iphoneCasePrice").innerText = caseTotalCost;
+//    });
  </script>
 
 </body>
